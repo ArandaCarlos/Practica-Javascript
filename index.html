@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+
+    <title>Utilizando Api Externa</title>
+</head>
+
+<body>
+    <h1 class="text-center mt-5">Obtener Usuarios</h1>
+    <div class="container my-5 text-center">
+        <button class="btn btn-danger w-100 " onclick="traer()">Click</button>
+        <div class="mt-5 text-center container" id="contenido">
+
+        </div>
+    </div>
+
+    <script>
+        var contenido = document.querySelector('#contenido');
+
+
+        function traer() {
+            for (var i = 0; i < 12; i++) {
+                fetch('https://randomuser.me/api')
+                    .then(data => data.json())
+                    .then(data => {
+                        console.log(data.results[0]);
+                        var person = data.results[0];
+                        var newDiv = document.createElement("div");
+                        newDiv.innerHTML = ` 
+                        <img src="${person.picture.large}" width="100px" class="img-fluid rounded-circle">
+                        <p>Nombre: ${person.name.first}</p>
+                        <p>Apellido: ${person.name.last}</p>
+                        <p>Email: ${person.email}</p>
+                        `;
+                        newDiv.classList.add("mb-5");
+                        newDiv.classList.add("mr-auto");
+
+                        newDiv.classList.add("float-left");
+                        contenido.appendChild(newDiv);
+                    })
+            }
+        }
+    </script>
+</body>
+
+</html>
